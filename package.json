@@ -1,0 +1,25 @@
+{
+  "name": "notr",
+  "version": "1.0.0",
+  "description": "Extremely simple notifications",
+  "main": "notr.js",
+  "scripts": {
+    "prepublish": "coffee -m -c ./notr.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ttab/notr"
+  },
+  "keywords": [
+    "notifications"
+  ],
+  "author": "Martin Algesten <martin@algesten.se>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ttab/notr/issues"
+  },
+  "homepage": "https://github.com/ttab/notr",
+  "devDependencies": {
+    "coffee-script": "^1.9.3"
+  }
+}

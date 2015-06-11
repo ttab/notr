@@ -1,0 +1,26 @@
+{
+  "name": "notr",
+  "main": "notr.js",
+  "version": "1.0.0",
+  "authors": [
+    "Martin Algesten <martin@algesten.se>"
+  ],
+  "description": "Extremely simple notifications",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "notifications"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ttab/notr",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
