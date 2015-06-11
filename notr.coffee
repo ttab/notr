@@ -110,7 +110,7 @@ notr = (opts = {}, callback) ->
         # schedule removal
         oneTrans div, (-> timeout = setTimeout remove, opts.stay) if opts.stay
 
-    undefined
+    return -> remove()
 
 notr.defineStack = (name, parent, styles) ->
     stacks[name] =
