@@ -10,7 +10,14 @@ There are a ton of complicated notification frameworks out there. What I need is
 * Simple (no built in icons)
 * Simple (reasonable defaults)
 
-### Installing with NPM
+## Compatibility
+
+* IE9+, FF, Chrome, Safari, iOS5+, Android
+
+Note that the transition effect may not work devices not supporting
+the `transition` CSS style.
+
+## Installing with NPM
 
 ```bash
 npm install -S notr
