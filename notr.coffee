@@ -63,9 +63,13 @@ oneTrans = (el, fn) ->
 # notification defaults
 DEFAULTS =
     html:         'Oh, why hallow thar!'    # the html body
-    className:    'alert alert-info'        # the class name
+    className:    'alert alert-info'        # the class name (in addition to 'notr')
     stack:        'def'                     # name of the stack (notr.defineStack)
     stay:         4000                      # time to stay on screen
+    id:           null                      # string identifier
+    onclick:      null                      # click handler to override default
+
+idof = (stack, id) -> "notr-#{stack}-#{id}"
 
 notr = (opts = {}, callback) ->
     # set up the options
@@ -73,44 +77,84 @@ notr = (opts = {}, callback) ->
     opts.callback = callback if callback
     opts = merge {}, DEFAULTS, opts
 
-    # create new notification div
-    div = doc.createElement 'div'
-    div.innerHTML = opts.html
-    div.className = "notr #{opts.className}"
-
     # ensure stack is there
     stack = stacks[opts.stack]
     return unless stack
     stack.attach()
 
+    # find possible existing div
+    div = doc.getElementById idof(opts.stack, opts.id) if opts.id
+    # or create new notification div
+    div = doc.createElement 'div' unless div
+
+    # configure it
+    div.id = idof(opts.stack, opts.id) if opts.id
+    div.innerHTML = opts.html
+    div.className = "notr #{opts.className}"
+
+    # clear any previous
+    clearTimeout div.timeout if div.timeout
+    div.timeout = null
+    div.callback = null
+
+    dispatch = (name) ->
+        evt = document.createEvent 'Event'
+        evt.initEvent name, true, false
+        div.dispatchEvent evt
+
     # starting point for transition
-    div.style.opacity = 0
-    div.style.marginTop = "#{margin(div, stack.container)}px"
-    stack.container.appendChild div
+    unless div.show
+        div.show = ->
+            return if div.parentNode
+            dispatch 'notr:beforeshow'
+            div.style.opacity = 0
+            div.style.marginTop = "#{margin(div, stack.container)}px"
+            stack.container.appendChild div
+            # transition in
+            later ->
+                div.style.marginTop = 0;
+                div.style.opacity = null;
+                oneTrans div, -> dispatch 'notr:show'
 
-    # function to remove again
-    timeout = null
-    remove = (ev) ->
-        clearTimeout timeout if timeout
-        div.style.opacity = 0
-        div.style.marginTop = "#{margin(div)}px"
-        opts.callback?(ev)
-        # remove from dom
-        oneTrans div, ->
-            div.parentNode.removeChild div
-            stack.detachIfEmpty()
 
-    # click removes
-    div.onclick = remove
+    # and show it (soon since someone receiving the returned div
+    # may want to attach an event handler)
+    later -> div.show()
 
-    # transition in
-    later ->
-        div.style.marginTop = 0;
-        div.style.opacity = null;
-        # schedule removal
-        oneTrans div, (-> timeout = setTimeout remove, opts.stay) if opts.stay
+    # put latest callback in place.
+    div.callback = opts.callback
 
-    return -> remove()
+    # function to hide again
+    unless div.hide
+        div.hide = (ev) ->
+            return unless div.show # just once
+            clearTimeout div.timeout if div.timeout
+            # start transition
+            div.style.opacity = 0
+            div.style.marginTop = "#{margin(div)}px"
+            cb = div.callback
+            # cleanup
+            div.hide = -> # make self inert (in case of repeated hide)
+            div.show = null
+            div.timeout = null
+            div.callback = null
+            # tell people about it
+            dispatch 'notr:beforehide'
+            # callback
+            cb?(ev)
+            # remove from dom
+            oneTrans div, ->
+                div.parentNode.removeChild div
+                dispatch 'notr:hide'
+                stack.detachIfEmpty()
+
+    # click handler or remove
+    div.onclick = if opts.onlick then opts.onclick else div.hide
+
+    # schedule removal
+    div.timeout = setTimeout div.hide, opts.stay if opts.stay > 0
+
+    return div
 
 notr.defineStack = (name, parent, styles) ->
     stacks[name] =
