@@ -10,21 +10,21 @@ later = (f) -> setTimeout f, 1
 # inject our default styles
 styles = """
     .notr {
+        margin-top: 0;
+        opacity: 1.0;
+        float: left;
+        clear: both;
+        transition: margin-top 0.2s, opacity 0.2s;
         min-width: 270px;
         min-height: 50px;
         margin-bottom: 3px;
-        margin-top: 0;
-        float: left;
-        clear: both;
-        opacity: 1.0;
         background: white;
         border: 1px solid #999;
         padding: 5px;
         box-shadow: 0 0 3px rgba(0,0,0,0.4);
-        transition: margin-top 0.2s, opacity 0.2s;
         cursor: pointer;
     }
-    .notrcont {
+    .notrstack {
         position: fixed;
         min-width: 270px;
         min-height: 50px;
@@ -161,7 +161,7 @@ notr.defineStack = (name, parent, styles) ->
         container: el = doc.createElement 'div'
         attach: -> sel(parent)?.appendChild el
         detachIfEmpty: -> el.parentNode?.removeChild(el) unless el.childNodes.length
-    el.className = "notrcont notrcont-#{name}"
+    el.className = "notrstack notrstack-#{name}"
     merge el.style, styles ? {}
 
 

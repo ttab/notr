@@ -36,7 +36,7 @@
     return setTimeout(f, 1);
   };
 
-  styles = ".notr {\n    min-width: 270px;\n    min-height: 50px;\n    margin-bottom: 3px;\n    margin-top: 0;\n    float: left;\n    clear: both;\n    opacity: 1.0;\n    background: white;\n    border: 1px solid #999;\n    padding: 5px;\n    box-shadow: 0 0 3px rgba(0,0,0,0.4);\n    transition: margin-top 0.2s, opacity 0.2s;\n    cursor: pointer;\n}\n.notrcont {\n    position: fixed;\n    min-width: 270px;\n    min-height: 50px;\n    z-index: 9000;\n}";
+  styles = ".notr {\n    margin-top: 0;\n    opacity: 1.0;\n    float: left;\n    clear: both;\n    transition: margin-top 0.2s, opacity 0.2s;\n    min-width: 270px;\n    min-height: 50px;\n    margin-bottom: 3px;\n    background: white;\n    border: 1px solid #999;\n    padding: 5px;\n    box-shadow: 0 0 3px rgba(0,0,0,0.4);\n    cursor: pointer;\n}\n.notrstack {\n    position: fixed;\n    min-width: 270px;\n    min-height: 50px;\n    z-index: 9000;\n}";
 
   css = doc.createElement('style');
 
@@ -204,7 +204,7 @@
         }
       }
     };
-    el.className = "notrcont notrcont-" + name;
+    el.className = "notrstack notrstack-" + name;
     return merge(el.style, styles != null ? styles : {});
   };
 
