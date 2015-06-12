@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="./notr.js"></script>
+    <style type="text/css">
+      body {
+        padding: 20px;
+      }
+      p {
+        margin-top: 30px;
+      }
+      code {
+        display: block;
+        background: #e4e4e4;
+        width: 400px;
+        padding: 10px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>notr examples</h1>
+    <p>
+      Stays for 4 seconds
+      <button onclick="notr('Hello <b>World!</b>')">Example 1</button>
+      <code>notr('Hello <b>World!</b>')</code>
+    <p>
+      Stays until clicked
+      <button onclick="notr({html:'Click to remove me',stay:0})">Example 2</button>
+      <code>notr({html:'Click to remove me',stay:0})</code>
+    <p>
+      Change contents
+      <button onclick="notr({html:'Some content here',id:'myid'})">Example 3a</button>
+      <button onclick="notr({html:'Other content here',id:'myid'})">Example 3b</button>
+      <code>notr({html:'Some content here',id:'myid'});
+notr({html:'Other content here',id:'myid'});</code>
+  </body>
+</html>
