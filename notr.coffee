@@ -11,7 +11,7 @@ later = (f) -> setTimeout f, 1
 styles = """
     .notr {
         min-width: 270px;
-        min-height: 20px;
+        min-height: 50px;
         margin-bottom: 3px;
         margin-top: 0;
         float: left;
@@ -27,7 +27,7 @@ styles = """
     .notrcont {
         position: fixed;
         min-width: 270px;
-        min-height: 20px;
+        min-height: 50px;
         z-index: 9000;
     }
 """
@@ -119,7 +119,7 @@ notr = (opts = {}, callback) ->
 
     # and show it (soon since someone receiving the returned div
     # may want to attach an event handler)
-    later -> div.show()
+    later -> div.show?()
 
     # put latest callback in place.
     div.callback = opts.callback
