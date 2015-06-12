@@ -84,7 +84,7 @@ notr({
 
 ## API
 
-#### el = notr(html, callback)
+#### notr(html, callback)
 
 Short form, equivalent to `el = notr({html:html, callback:callback})`
 
