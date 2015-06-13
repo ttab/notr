@@ -149,7 +149,7 @@ notr = (opts = {}, callback) ->
                 stack.detachIfEmpty()
 
     # click handler or remove
-    div.onclick = if opts.onlick then opts.onclick else div.hide
+    div.onclick = if opts.onclick then opts.onclick else div.hide
 
     # schedule removal
     div.timeout = setTimeout div.hide, opts.stay if opts.stay > 0
