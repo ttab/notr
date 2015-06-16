@@ -15,19 +15,17 @@ styles = """
         float: left;
         clear: both;
         transition: margin-top 0.2s, opacity 0.2s;
-        min-width: 270px;
-        min-height: 50px;
+        box-shadow: 0 0 2px rgba(0,0,0,0.4);
+        padding: 9px 14px;
+        border-radius: 5px;
+        border: none;
+        color: #666;
         margin-bottom: 3px;
         background: white;
-        border: 1px solid #999;
-        padding: 5px;
-        box-shadow: 0 0 3px rgba(0,0,0,0.4);
         cursor: pointer;
     }
     .notrstack {
         position: fixed;
-        min-width: 270px;
-        min-height: 50px;
         z-index: 9000;
     }
 """
